@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusha Zone | لتعليم العربية والقرآن الكريم</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
+
+    
+    <style>
+        :root {
+            --primary-green: #1a3c34; /* الأخضر الغامق الكلاسيكي */
+            --gold: #d4af37;        /* الذهبي الملكي */
+            --soft-white: #f8f9fa;
+            --text-dark: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+
+        /* حماية المحتوى من النسخ */
+        .no-copy {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* الهيدر */
+        header {
+            background: var(--primary-green);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav button, .lang-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: 'Tajawal';
+        }
+
+        nav button:hover, .lang-btn:hover { color: var(--gold); }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: var(--gold);
+            font-size: 14px;
+        }
+        .lang-btn:hover {
+            background: var(--gold);
+            color: var(--primary-green);
+        }
+
+        /* الأقسام */
+        .section { display: none; padding: 80px 10%; animation: fadeIn 0.8s ease-in-out; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* الواجهة الرئيسية (Hero) */
+        #home-hero {
+            background: linear-gradient(rgba(26, 60, 52, 0.85), rgba(26, 60, 52, 0.85)), 
+                        url('https://images.unsplash.com/photo-1516315720917-231ef9acce48?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        #home-hero h1 { font-family: 'Amiri', serif; font-size: 4rem; margin-bottom: 20px; color: var(--gold); }
+        #home-hero p { font-size: 1.4rem; max-width: 800px; line-height: 1.8; margin-bottom: 30px; }
+
+        .hero-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .section-img {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            display: block;
+        }
+
+        .btn {
+            background: var(--gold);
+            color: var(--primary-green);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            font-size: 1.1rem;
+        }
+        .btn:hover { background: white; transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        /* الشبكة والبطاقات */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 6px solid var(--primary-green);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-10px); border-top-color: var(--gold); }
+
+        .price { font-size: 32px; font-weight: 800; color: var(--primary-green); margin: 25px 0; }
+        .duration { font-size: 1rem; color: #666; margin-top: -15px; margin-bottom: 15px; font-weight: bold;}
+
+        /* نموذج الحجز */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Tajawal';
+            box-sizing: border-box;
+        }
+
+        /* المكتبة والمدونة والتعليقات */
+        .content-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-right: 8px solid var(--gold);
+        }
+
+        /* قسم التعليقات */
+        .comment-input-container {
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .comments-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .comment-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-green);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .comment-item.rtl-border {
+            border-left: none;
+            border-right: 4px solid var(--primary-green);
+        }
+        .comment-meta {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        iframe { width: 100%; height: 600px; border: 2px solid #eee; border-radius: 10px; }
+
+        footer {
+            background: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 40px 5%;
+            margin-top: 80px;
+        }
+
+        .footer-logo { font-family: 'Amiri', serif; font-size: 24px; color: var(--gold); margin-bottom: 10px; }
+        
+        /* دعم اللغات لاتجاهات الصفحة */
+        .ltr { dir: ltr; text-align: left; }
+        .rtl { dir: rtl; text-align: right; }
+/* ضبط الهيدر والقائمة ليتناسب مع شاشات الموبايل والتابلت */
+header {
+    background: var(--primary-green);
+    padding: 15px 5%;
+    display: flex;
+    flex-wrap: wrap; /* يسمح للعناصر بالنزول لسطر جديد لو الشاشة ضيقة */
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* يمنع الأزرار من الخروج عن حافة الشاشة */
+}
+
+/* حل مشكلة المساحة البيضاء الجانبية وانكماش الصفحة */
+body, html {
+    overflow-x: hidden; /* يمنع ظهور أي شريط تمرير أفقي أو مساحات بيضاء في الجنب */
+    width: 100%;
+}
+
+/* ضبط خاص لشاشات الموبايل الصغيرة */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* يضع اللوجو فوق والأزرار تحتها بترتيب منسق */
+        gap: 10px;
+        padding: 10px;
+    }
+    nav {
+        justify-content: center;
+        gap: 8px;
+    }
+    nav button {
+        font-size: 13px; /* تصغير حجم الخط قليلاً ليناسب الموبايل */
+        padding: 4px 6px;
+    }
+    #home-hero h1 {
+        font-size: 2.2rem; /* تصغير حجم العنوان الكبير ليناسب الشاشة */
+    }
+    #home-hero p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+}
+    </style>
+</head>
+<body class="no-copy">
+
+    <header>
+        <a href="#" class="logo" onclick="showSection('home')">Fusha Zone</a>
+        <nav>
+            <button onclick="showSection('home')" data-i18n="nav-home">الرئيسية</button>
+            <button onclick="showSection('about')" data-i18n="nav-about">هدفنا وعن الأكاديمية</button>
+            <button onclick="showSection('courses')" data-i18n="nav-courses">باقات العربية</button>
+            <button onclick="showSection('quran')" data-i18n="nav-quran">قسم القرآن</button>
+            <button onclick="showSection('blog')" data-i18n="nav-blog">المدونة</button>
+            <button onclick="showSection('library')" data-i18n="nav-library">المكتبة</button>
+            <button onclick="showSection('reviews')" data-i18n="nav-reviews">اسألنا وتعليقاتكم</button>
+            <button onclick="showSection('contact')" class="btn" style="padding: 8px 20px; font-size: 14px;" data-i18n="nav-contact">احجز حصتك</button>
+            <button onclick="toggleLanguage()" class="lang-btn">English</button>
+        </nav>
+    </header>
+
+    <!-- الرئيسية -->
+    <section id="home" class="section active" style="padding:0;">
+        <div id="home-hero">
+           <img src="https://i.postimg.cc/dtNjLjV8/IMG-20260624-032644.png" class="hero-img" alt="Fusha Zone">
+          
+            <h1 data-i18n="hero-title">لغتك العربية.. هويتك وعالمك</h1>
+            <p data-i18n="hero-desc">مرحباً بكم في منصة Fusha Zone. نقدم رحلة تعليمية فريدة للناطقين بغير العربية، حيث تلتقي الأصالة الأكاديمية بالطلاقة الحوارية بأسلوب عصري وحيوي مع معلمين محترفين متحدثين أصليين باللغة العربية.</p>
+            <button class="btn" onclick="showSection('about')" data-i18n="hero-btn">اكتشف هويتنا التعليمية</button>
+        </div>
+    </section>
+
+    <!-- عن الأكاديمية وهدفنا -->
+    <section id="about" class="section">
+        <h2 style="font-family: 'Amiri'; color: var(--primary-green); text-align: center; font-size: 3rem;" data-i18n="about-title">رسالتنا التعليمية وهدفنا</h2>
+        <!-- صورة تعبيرية عند الجزء المعني -->
+      <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0;">
+    <img src="https://i.postimg.cc/GpxQhwB5/1782262652225.png" alt="Fusha Zone" style="max-width: 100%; height: auto; display: block;">
+</div>
+        <div style="max-width: 900px; margin: 40px auto; line-height: 2.2; text-align: center; font-size: 1.3rem;" data-i18n="about-desc">
+            في <b>Fusha Zone</b>، نؤمن بأن تعلم اللغة هو مفتاح الثقافة. صممنا منهجاً يوازن بذكاء بين <b>الرصانة الأكاديمية</b> (قواعد ونحو وصوتيات) وبين <b>القدرة على التواصل</b> الفوري والواثق من خلال نخبة من المعلمين المحترفين والمتحدثين الأصليين للغة العربية لضمان إتقان مخارج الحروف كما ينطقها أهلها.
+            <br><br>
+            <b>لماذا تختارنا وتدرس معنا؟</b> لأننا نقدم خططاً تعليمية مخصصة تناسب وتلبي أهداف كل طالب الفردية سواء كانت للدراسة، العمل، أو التقرب من الثقافة العربية والقرآن الكريم.
+        </div>
+    </section>
+
+    <!-- باقات اللغة العربية -->
+    <section id="courses" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="courses-title">📚 برامج اللغة العربية (لغير الناطقين بها)</h2>
+        <!-- صورة تعبيرية لدروس العربية -->
+       <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0;">
+    <img src="https://i.postimg.cc/5tsCRxQ6/ae54bfd0e631676081c4ef7caccf42c9.jpg" alt="Fusha Zone Courses" style="width: 100%; max-width: 600px; height: auto; display: block; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+</div>
+        <p style="text-align: center; font-size: 1.2rem;" data-i18n="courses-subtitle">تعلم القواعد، القراءة، الكتابة، وبناء مهارات تواصل قوية وثابتة.</p>
+        <div class="grid">
+            <div class="card">
+                <h3 data-i18n="ar-p1-title">الباقة الشهرية الكاملة (12 حصة / شهر)</h3>
+                <div class="duration" data-i18n="ar-duration">🕒 مدة الجلسة: 50 دقيقة</div>
+                <p data-i18n="ar-p1-desc">جلسات مكثفة ومستمرة لضمان تحقيق أعلى درجات التقدم والطلاقة الحوارية.</p>
+                <div class="price" data-i18n="ar-p1-price">فردي: $100<br>ثنائي طالبيْن: $120 إجمالي ($60 لكل طالب)</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+            <div class="card">
+                <h3 data-i18n="ar-p2-title">الباقة الشهرية المرنة (8 حصص / شهر)</h3>
+                <div class="duration" data-i18n="ar-duration">🕒 مدة الجلسة: 50 دقيقة</div>
+                <p data-i18n="ar-p2-desc">جدول مرن يتناسب مع أوقاتك لضمان الاستمرارية وتطوير المهارات الحوارية والأكاديمية.</p>
+                <div class="price" data-i18n="ar-p2-price">فردي: $60<br>ثنائي طالبيْن: $80 إجمالي ($40 لكل طالب)</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+            <div class="card">
+                <h3 data-i18n="ar-p3-title">جلسة دفع فردية مستقلة</h3>
+                <div class="duration" data-i18n="ar-duration">🕒 مدة الجلسة: 50 دقيقة</div>
+                <p data-i18n="ar-p3-desc">جلسة فردية مرنة تُدفع حسب رغبتك لتقييم مستواك الحالي أو مناقشة مواضيع محددة.</p>
+                <div class="price">$10</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+            <div class="card">
+                <h3 data-i18n="ar-p4-title">جلسة محادثة حصرية</h3>
+                <div class="duration" data-i18n="ar-duration">🕒 مدة الجلسة: 50 دقيقة</div>
+                <p data-i18n="ar-p4-desc">جلسة مخصصة بالكامل للمحادثة والطلاقة الشفهية لكسر حاجز الخوف من التحدث باللغة العربية.</p>
+                <div class="price">$15</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم القرآن الكريم والتجويد -->
+    <section id="quran" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="quran-title">🕌 دورات القرآن الكريم والتجويد</h2>
+        <!-- صورة معلمة تعلم قرآن مع لابتوب وكتاب قرآن وصورة ممتازة -->
+      <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin: 20px 0;">
+    <img src="https://i.postimg.cc/L8RN1BcG/cbe59e57d6b763ac70d9da52e8df2f9a-edit-112496468903335.jpg" alt="Fusha Zone Section" style="width: 100%; max-width: 600px; height: auto; display: block; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+</div>
+        <p style="text-align: center; font-size: 1.2rem;" data-i18n="quran-subtitle">إتقان تلاوة القرآن الكريم، أحكام التجويد الصحيحة، والحفظ والمراجعة مع معلمين محترفين متحدثين أصليين.</p>
+        <div class="grid">
+            <div class="card">
+                <h3 data-i18n="q-p1-title">الباقة الشهرية الكاملة (12 حصة / شهر)</h3>
+                <div class="duration" data-i18n="q-duration">🕒 مدة الجلسة: 40 دقيقة</div>
+                <p data-i18n="q-p1-desc">دراسة مكثفة ومتابعة مستمرة لضبط مخارج الحروف وحفظ متقن لكتاب الله الكريم.</p>
+                <div class="price" data-i18n="q-p1-price">فردي: $50<br>ثنائي طالبيْن: $60 إجمالي ($30 لكل طالب)</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+            <div class="card">
+                <h3 data-i18n="q-p2-title">الباقة الشهرية المرنة (8 حصص / شهر)</h3>
+                <div class="duration" data-i18n="q-duration">🕒 مدة الجلسة: 40 دقيقة</div>
+                <p data-i18n="q-p2-desc">باقة مرنة مناسبة لأصحاب الجداول المزدحمة لتعلم أحكام التجويد والحفظ التدريجي بانتظام.</p>
+                <div class="price" data-i18n="q-p2-price">فردي: $35<br>ثنائي طالبيْن: $40 إجمالي ($20 لكل طالب)</div>
+                <button class="btn" onclick="showSection('contact')" data-i18n="book-btn">احجز الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- المدونة -->
+    <section id="blog" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="blog-title">مدونة فصحى زون</h2>
+        <div class="grid">
+            <div class="content-box">
+                <h3 style="color: var(--primary-green);" data-i18n="b1-title">أسرار النطق الصحيح (الفونيتكس)</h3>
+                <p data-i18n="b1-desc">لماذا يجد الأجانب صعوبة في حرفي الضاد والعين؟ وكيف تتغلب على ذلك في أسبوع واحد؟</p>
+                <button class="btn" style="padding: 8px 20px;" data-i18n="read-btn">اقرأ المقال</button>
+            </div>
+            <div class="content-box">
+                <h3 style="color: var(--primary-green);" data-i18n="b2-title">الفصحى أم العامية؟</h3>
+                <p data-i18n="b2-desc">دليلك الشامل لاختيار المسار الصحيح لبدء تعلم اللغة العربية بذكاء.</p>
+                <button class="btn" style="padding: 8px 20px;" data-i18n="read-btn">اقرأ المقال</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- المكتبة -->
+    <section id="library" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="lib-title">واحة القصص والموارد</h2>
+        <p style="text-align: center; margin-bottom: 30px;" data-i18n="lib-desc">مكتبة حصرية لطلابنا تضم قصصاً تفاعلية ومناهج أكاديمية محمية.</p>
+        <div class="content-box">
+            <h4 style="text-align: center; color: #666;" data-i18n="lib-lock">[ المعاينة التفاعلية للمشتركين فقط ]</h4>
+            <iframe src="https://docs.google.com/viewer?url=YOUR_PDF_LINK&embedded=true"></iframe>
+        </div>
+    </section>
+
+    <!-- اسألنا وتعليقاتكم -->
+    <section id="reviews" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="rev-title">اسألنا وتعليقاتكم</h2>
+        
+        <div class="comment-input-container">
+            <h3 style="margin-top:0;" data-i18n="add-comment">أضف تعليقك أو سؤالك</h3>
+            <form id="commentForm" onsubmit="handleCommentSubmit(event)">
+                <input type="text" id="commenterName" placeholder="الاسم" required>
+                <textarea id="commentText" rows="4" placeholder="اكتب تعليقك هنا..." required></textarea>
+                <button type="submit" class="btn" style="width: 100%;" data-i18n="submit-comment">إرسال التعليق</button>
+            </form>
+        </div>
+
+        <div class="comments-list">
+            <h3 data-i18n="students-comments">آراء وتعليقات الطلاب</h3>
+            <div id="approvedComments">
+                <!-- تعليقات افتراضية تمت الموافقة عليها مسبقاً -->
+                <div class="comment-item" id="default-comment-item">
+                    <p><b>أحمد محمد</b>: أكاديمية ممتازة جداً وتوفر أفضل المعلمين المحترفين.</p>
+                    <div class="comment-meta"><span>2026-06-24</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تواصل معنا -->
+    <section id="contact" class="section">
+        <h2 style="text-align: center; font-family: 'Amiri'; color: var(--primary-green); font-size: 2.5rem;" data-i18n="contact-title">تواصل مع أكاديمية Fusha Zone مباشرة</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 30px;">
+            <span data-i18n="contact-email-label">البريد الإلكتروني الرسمي للأكاديمية:</span> 
+            <a href="mailto:fushazone@gmail.com" style="color: var(--primary-green); font-weight: bold;">fushazone@gmail.com</a>
+        </p>
+        <div class="contact-container">
+            <form action="https://formspree.io/f/your-email@example.com" method="POST">
+                <label data-i18n="form-name">الاسم الكامل:</label>
+                <input type="text" name="name" placeholder="مثال: John Doe" required>
+                
+                <label data-i18n="form-email">البريد الإلكتروني:</label>
+                <input type="email" name="email" placeholder="email@example.com" required>
+                
+                <label data-i18n="form-package">الدورة أو الباقة المطلوبة:</label>
+                <select name="package" id="packageSelect">
+                    <!-- خيارات باقات العربية والقرآن الجديدة -->
+                    <option value="trial">استشارة تجريبية مجانية / Free Trial الاستشارة</option>
+                    <option value="ar-12">العربية: باقة شهرية كاملة (12 حصة) / Arabic: Full Monthly</option>
+                    <option value="ar-8">العربية: باقة شهرية مرنة (8 حصص) / Arabic: Flexible Monthly</option>
+                    <option value="ar-single">العربية: جلسة فردية مستقلة ($10) / Arabic: Single Session</option>
+                    <option value="ar-conv">العربية: جلسة محادثة حصرية ($15) / Arabic: Conversation Session</option>
+                    <option value="q-12">القرآن: باقة شهرية كاملة (12 حصة) / Quran: Full Monthly</option>
+                    <option value="q-8">القرآن: باقة شهرية مرنة (8 حصص) / Quran: Flexible Monthly</option>
+                </select>
+                
+                <label data-i18n="form-message">رسالتك أو مستواك الحالي:</label>
+                <textarea name="message" rows="5" placeholder="أخبرنا المزيد عن أهدافك التعليمية..."></textarea>
+                
+                <button type="submit" class="btn" style="width: 100%;" data-i18n="form-submit">إرسال طلب الحجز</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Fusha Zone</div>
+        <p data-i18n="footer-dev">تصميم وتطوير: أكاديمية Fusha Zone - لتعليم اللغة العربية لغير الناطقين بها والقرآن الكريم</p>
+        <p style="font-size: 13px; color: #888;" data-i18n="footer-copy">&copy; 2026 جميع الحقوق محفوظة. يمنع نسخ المحتوى أو إعادة استخدامه.</p>
+    </footer>
+
+    <script>
+        // مصفوفة الترجمة الكاملة للموقع بين اللغتين
+        const translations = {
+            ar: {
+                "nav-home": "الرئيسية",
+                "nav-about": "هدفنا وعن الأكاديمية",
+                "nav-courses": "باقات العربية",
+                "nav-quran": "قسم القرآن",
+                "nav-blog": "المدونة",
+                "nav-library": "المكتبة",
+                "nav-reviews": "اسألنا وتعليقاتكم",
+                "nav-contact": "احجز حصتك",
+                "hero-title": "لغتك العربية.. هويتك وعالمك",
+                "hero-desc": "مرحباً بكم في منصة Fusha Zone. نقدم رحلة تعليمية فريدة للناطقين بغير العربية، حيث تلتقي الأصالة الأكاديمية بالطلاقة الحوارية بأسلوب عصري وحيوي مع معلمين محترفين متحدثين أصليين باللغة العربية.",
+                "hero-btn": "اكتشف هويتنا التعليمية",
+                "about-title": "رسالتنا التعليمية وهدفنا",
+                "about-desc": "في <b>Fusha Zone</b>، نؤمن بأن تعلم اللغة هو مفتاح الثقافة. صمممتا منهجاً يوازن بذكاء بين <b>الرصانة الأكاديمية</b> (قواعد ونحو وصوتيات) وبين <b>القدرة على التواصل</b> الفوري والواثق من خلال نخبة من المعلمين المحترفين والمتحدثين الأصليين للغة العربية لضمان إتقان مخارج الحروف كما ينطقها أهلها.<br><br><b>لماذا تختارنا وتدرس معنا؟</b> لأننا نقدم خططاً تعليمية مخصصة تناسب وتلبي أهداف كل طالب الفردية سواء كانت للدراسة، العمل، أو التقرب من الثقافة العربية والقرآن الكريم.",
+                "courses-title": "📚 برامج اللغة العربية (لغير الناطقين بها)",
+                "courses-subtitle": "تعلم القواعد، القراءة، الكتابة، وبناء مهارات تواصل قوية وثابتة.",
+                "ar-duration": "🕒 مدة الجلسة: 50 دقيقة",
+                "ar-p1-title": "الباقة الشهرية الكاملة (12 حصة / شهر)",
+                "ar-p1-desc": "جلسات مكثفة ومستمرة لضمان تحقيق أعلى درجات التقدم والطلاقة الحوارية.",
+                "ar-p1-price": "فردي: $100<br>ثنائي طالبيْن: $120 إجمالي ($60 لكل طالب)",
+                "ar-p2-title": "الباقة الشهرية المرنة (8 حصص / شهر)",
+                "ar-p2-desc": "جدول مرن يتناسب مع أوقاتك لضمان الاستمرارية وتطوير المهارات الحوارية والأكاديمية.",
+                "ar-p2-price": "فردي: $60<br>ثنائي طالبيْن: $80 إجمالي ($40 لكل طالب)",
+                "ar-p3-title": "جلسة دفع فردية مستقلة",
+                "ar-p3-desc": "جلسة فردية مرنة تُدفع حسب رغبتك لتقييم مستواك الحالي أو مناقشة مواضيع محددة.",
+                "ar-p4-title": "جلسة محادثة حصرية",
+                "ar-p4-desc": "جلسة مخصصة بالكامل للمحادثة والطلاقة الشفهية لكسر حاجز الخوف من التحدث باللغة العربية.",
+                "book-btn": "احجز الآن",
+                "quran-title": "🕌 دورات القرآن الكريم والتجويد",
+                "quran-subtitle": "إتقان تلاوة القرآن الكريم، أحكام التجويد الصحيحة، والحفظ والمراجعة مع معلمين محترفين متحدثين أصليين.",
+                "q-duration": "🕒 مدة الجلسة: 40 دقيقة",
+                "q-p1-title": "الباقة الشهرية الكاملة (12 حصة / شهر)",
+                "q-p1-desc": "دراسة مكثفة ومتابعة مستمرة لضبط مخارج الحروف وحفظ متقن لكتاب الله الكريم.",
+                "q-p1-price": "فردي: $50<br>ثنائي طالبيْن: $60 إجمالي ($30 لكل طالب)",
+                "q-p2-title": "الباقة الشهرية المرنة (8 حصص / شهر)",
+                "q-p2-desc": "باقة مرنة مناسبة لأصحاب الجداول المزدحمة لتعلم أحكام التجويد والحفظ التدريجي بانتظام.",
+                "q-p2-price": "فردي: $35<br>ثنائي طالبيْن: $40 إجمالي ($20 لكل طالب)",
+                "blog-title": "مدونة فصحى زون",
+                "b1-title": "أسرار النطق الصحيح (الفونيتكس)",
+                "b1-desc": "لماذا يجد الأجانب صعوبة في حرفي الضاد والعين؟ وكيف تتغلب على ذلك في أسبوع واحد؟",
+                "b2-title": "الفصحى أم العامية؟",
+                "b2-desc": "دليلك الشامل لاختيار المسار الصحيح لبدء تعلم اللغة العربية بذكاء.",
+                "read-btn": "اقرأ المقال",
+                "lib-title": "واحة القصص والموارد",
+                "lib-desc": "مكتبة حصرية لطلابنا تضم قصصاً تفاعلية ومناهج أكاديمية محمية.",
+                "lib-lock": "[ المعاينة التفاعلية للمشتركين فقط ]",
+                "rev-title": "اسألنا وتعليقاتكم",
+                "add-comment": "أضف تعليقك أو سؤالك",
+                "submit-comment": "إرسال التعليق",
+                "students-comments": "آراء وتعليقات الطلاب",
+                "contact-title": "تواصل مع أكاديمية Fusha Zone مباشرة",
+                "contact-email-label": "البريد الإلكتروني الرسمي للأكاديمية:",
+                "form-name": "الاسم الكامل:",
+                "form-email": "البريد الإلكتروني:",
+                "form-package": "الدورة أو الباقة المطلوبة:",
+                "form-message": "رسالتك أو مستواك الحالي:",
+                "form-submit": "إرسال طلب الحجز",
+                "footer-dev": "تصميم وتطوير: أكاديمية Fusha Zone - لتعليم اللغة العربية لغير الناطقين بها والقرآن الكريم",
+                "footer-copy": "&copy; 2026 جميع الحقوق محفوظة. يمنع نسخ المحتوى أو إعادة استخدامه."
+            },
+            en: {
+                "nav-home": "Home",
+                "nav-about": "Our Goal & Academy",
+                "nav-courses": "Arabic Courses",
+                "nav-quran": "Quran Section",
+                "nav-blog": "Blog",
+                "nav-library": "Library",
+                "nav-reviews": "Q&A & Reviews",
+                "nav-contact": "Book Your Session",
+                "hero-title": "Your Arabic Language.. Your Identity & World",
+                "hero-desc": "Welcome to Fusha Zone platform. We offer a unique educational journey for non-native speakers, where academic authenticity meets conversational fluency in a modern and lively style with professional native Arabic instructors.",
+                "hero-btn": "Discover Our Identity",
+                "about-title": "Our Educational Mission & Goal",
+                "about-desc": "At <b>Fusha Zone</b>, we believe that learning a language is the key to culture. We designed a curriculum that smartly balances <b>academic rigor</b> (grammar, syntax, and phonetics) with the ability for immediate and confident <b>communication</b> through a selection of professional native Arabic teachers to ensure mastering letter pronunciations as natives do.<br><br><b>Why study with us?</b> Because we offer tailored educational plans that fit and fulfill every student's individual goals, whether for study, work, or getting closer to the Arabic culture and the Holy Quran.",
+                "courses-title": "📚 Arabic Language Courses (For Non-Native Speakers)",
+                "courses-subtitle": "Learn grammar, reading, writing, and build solid communication skills.",
+                "ar-duration": "🕒 Session Duration: 50 Minutes",
+                "ar-p1-title": "Full Monthly Package (12 Sessions / Month)",
+                "ar-p1-desc": "Intensive and continuous sessions to ensure the highest levels of progress and conversational fluency.",
+                "ar-p1-price": "One-on-One: $100<br>Duet (2 Students): $120 total ($60 per student)",
+                "ar-p2-title": "Flexible Monthly Package (8 Sessions / Month)",
+                "ar-p2-desc": "A flexible schedule that matches your time to ensure continuity and develop conversational and academic skills.",
+                "ar-p2-price": "One-on-One: $60<br>Duet (2 Students): $80 total ($40 per student)",
+                "ar-p3-title": "Single Pay-As-You-Go Session",
+                "ar-p3-desc": "A flexible individual session paid upon request to evaluate your current level or discuss specific topics.",
+                "ar-p4-title": "Exclusive Conversation Session",
+                "ar-p4-desc": "A session entirely dedicated to conversation and verbal fluency to break the fear of speaking Arabic.",
+                "book-btn": "Book Now",
+                "quran-title": "🕌 Quran & Tajweed Courses",
+                "quran-subtitle": "Master Quran recitation, proper Tajweed rules, and memorization with professional native instructors.",
+                "q-duration": "🕒 Session Duration: 40 Minutes",
+                "q-p1-title": "Full Monthly Package (12 Sessions / Month)",
+                "q-p1-desc": "Intensive study and constant follow-up to correct articulations and perfect memorization of the Holy Quran.",
+                "q-p1-price": "One-on-One: $50<br>Duet (2 Students): $60 total ($30 per student)",
+                "q-p2-title": "Flexible Monthly Package (8 Sessions / Month)",
+                "q-p2-desc": "A flexible package suitable for busy schedules to learn Tajweed rules and progressive regular memorization.",
+                "q-p2-price": "One-on-One: $35<br>Duet (2 Students): $40 total ($20 per student)",
+                "blog-title": "Fusha Zone Blog",
+                "b1-title": "Secrets of Correct Pronunciation (Phonetics)",
+                "b1-desc": "Why do foreigners find difficulty in the letters Dad and Ayn? And how to overcome this in one week?",
+                "b2-title": "Fusha or Colloquial?",
+                "b2-desc": "Your comprehensive guide to choosing the right path to start learning Arabic smartly.",
+                "read-btn": "Read Article",
+                "lib-title": "Stories & Resources Oasis",
+                "lib-desc": "An exclusive library for our students containing interactive stories and protected academic curricula.",
+                "lib-lock": "[ Interactive Preview for Subscribers Only ]",
+                "rev-title": "Q&A & Your Comments",
+                "add-comment": "Add your comment or question",
+                "submit-comment": "Submit Comment",
+                "students-comments": "Students Reviews & Comments",
+                "contact-title": "Contact Fusha Zone Academy Directly",
+                "contact-email-label": "Official Academy Email:",
+                "form-name": "Full Name:",
+                "form-email": "Email Address:",
+                "form-package": "Required Course / Package:",
+                "form-message": "Your Message or Current Level:",
+                "form-submit": "Send Booking Request",
+                "footer-dev": "Designed & Developed by: Fusha Zone Academy - Teaching Arabic for Non-Native Speakers & Holy Quran",
+                "footer-copy": "&copy; 2026 All Rights Reserved. Copying or reusing content is prohibited."
+            }
+        };
+
+        let currentLang = 'ar';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const btn = document.querySelector('.lang-btn');
+            btn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+            
+            // تغيير اتجاهات الصفحة
+            if (currentLang === 'en') {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+                document.body.classList.remove('no-copy'); // اختياري حسب رغبتك
+                document.getElementById('approvedComments').classList.remove('rtl-border');
+            } else {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                document.getElementById('approvedComments').classList.add('rtl-border');
+            }
+
+            // تطبيق الترجمة على العناصر الحاملة للخاصية data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+
+            // تحديث الـ placeholders للمدخلات
+            if (currentLang === 'en') {
+                document.getElementById('commenterName').placeholder = "Your Name";
+                document.getElementById('commentText').placeholder = "Write your comment here...";
+            } else {
+                document.getElementById('commenterName').placeholder = "الاسم";
+                document.getElementById('commentText').placeholder = "اكتب تعليقك هنا...";
+            }
+        }
+
+        function showSection(sectionId) {
+            // إخفاء كافة الأقسام
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // إظهار القسم المحدد
+            document.getElementById(sectionId).classList.add('active');
+            
+            // العودة للأعلى بسلاسة
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // معالجة إرسال التعليقات مع ميزة عدم النشر إلا بعد موافقة الإدارة (أنت)
+        function handleCommentSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('commenterName').value;
+            const text = document.getElementById('commentText').value;
+            
+            // تنبيه المستخدم بنجاح الإرسال وانتظار الموافقة المسبقة
+            if (currentLang === 'ar') {
+                alert("شكراً لك! تم إرسال تعليقك بنجاح، ولن يظهر على الموقع إلا بعد مراجعته والموافقة عليه من قبل إدارة الأكاديمية أولاً.");
+            } else {
+                alert("Thank you! Your comment has been submitted successfully and will appear on the site once it is reviewed and approved by the academy administration.");
+            }
+
+            // إعادة تعيين الحقول
+            document.getElementById('commentForm').reset();
+            
+            /* 
+               ملاحظة برمجية: في البيئة الحقيقية، يتم إرسال هذا التعليق إلى السيرفر أو قاعدة البيانات (Database) 
+               بحيث تكون حالته (Approved = false)، ومن لوحة التحكم الخاصة بك تقوم بتغييرها إلى True ليظهر للجميع.
+            */
+        }
+    </script>
+
+</body>
+</html>
